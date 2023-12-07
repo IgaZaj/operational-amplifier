@@ -1,0 +1,50 @@
+Zadanie 3
+
+.lib modele8.lib
+
+Vi vi 0 dc 0 ac 1
+
+*podobwod wzmacniacz z 2
+.subckt OPAMP2 in_p in_m Vcc Vee out
+
+Rf vcc 8 20k
+Rw 4 vee 100
+Cc 3 5 30p
+
+*tranzystory
+Q1 2 in_m 1 qnpn
+Q2 3 in_p 1 qnpn
+Q3 1 8 4 qnpn
+Q4 2 2 vcc qpnp
+Q5 3 2 vcc qpnp
+Q6 5 3 vcc qpnp
+Q7 7 8 vee qnpn
+Q8 8 8 vee qnpn
+Q9 vcc 5 out qnpn
+Q10 vee 7 out qpnp
+Q11 6 6 5 qpnp
+Q12 6 6 7 qnpn
+
+.ends
+
+*zasilanie jak w 2
+Vcc vcc 0 10
+Vee vee 0 -10
+
+*elementy pozostale
+R1 1 0 1k
+R2 1 out 9k
+*Rl out 0 100
+
+*wstawienie podukladu
+X1 vi 1 vcc vee out OPAMP2
+
+*rezystancja wyjsciowa zrodlo
+*Vout out 0 dc 0
+
+*analizy
+*.dc Vi -2 2 1m
+*.ac dec 200 100 100meg
+*.dc Vout -1 1 1m Rout
+.probe
+.end
